@@ -1,0 +1,15 @@
+@import "tailwindcss";
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+/* Importe tes styles spécifiques au dashboard */
+@import "./admin/style.css";
+
+@theme {
+    --font-sans: "Poppins", ui-sans-serif, system-ui, sans-serif;
+    /* Tes couleurs spécifiques au thème Dashboard */
+    --color-brand: #16a34a;
+}
