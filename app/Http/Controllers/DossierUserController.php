@@ -10,6 +10,12 @@ class DossierUserController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+    public function index()
+    {
+        return view('admin.pages.user.list');
+    }
+
     public function create()
     {
         return view('admin.pages.user.create');

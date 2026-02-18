@@ -7,5 +7,6 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DossierUserController;
 
 Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+Route::get('/users', [DossierUserController::class, 'index'])->name('users');
 Route::get('/create-user', [DossierUserController::class, 'create'])->name('create-user');
-Volt::route('/edit-user/{user}', 'edit-user')->name('edit.user');
+Route::get('/edit-user/{user}', [DossierUserController::class, 'edit'])->name('edit-user');

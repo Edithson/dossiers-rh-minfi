@@ -13,16 +13,13 @@
     @vite(['resources/css/admin.css', 'resources/js/app.js'])
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans antialiased flex h-screen overflow-hidden">
-    <div>
         @include('admin.layout.sidebar')
         <main class="flex-1 flex flex-col h-full overflow-hidden">
-        @include('admin.layout.header')
+            @include('admin.layout.header')
             <div class="flex-1 overflow-y-auto p-4 lg:p-8">
                 @yield('content')
             </div>
         </main>
-    </div>
-
 </body>
 
 <script src="{{ asset('js/admin/script.js') }}"></script>
