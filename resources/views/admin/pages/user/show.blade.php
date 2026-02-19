@@ -1,5 +1,5 @@
 @extends('admin.index')
 
 @section('content')
-    <livewire:dashboard />
+    <livewire:show-user :user="$user" />
 @endsection

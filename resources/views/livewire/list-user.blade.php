@@ -88,7 +88,7 @@ new class extends Component {
         }
 
         return [
-            'users' => $query->paginate(10),
+            'users' => $query->paginate(1),
             'availablePieces' => Piece::all(),
             'totalPiecesCount' => Piece::count()
         ];
@@ -104,9 +104,14 @@ new class extends Component {
 
     <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
         <div class="px-6 py-4 border-b border-gray-200 bg-gray-50">
-            <h3 class="text-lg font-bold text-gray-800 mb-4">
-                <i class="fas fa-users text-blue-500 mr-2"></i> Liste du personnel
-            </h3>
+            <div class="px-6 py-4 border-b border-gray-200 bg-gray-50 flex flex-col sm:flex-row justify-between items-center gap-4">
+                <h3 class="text-lg font-bold text-gray-800">
+                    <i class="fas fa-users text-blue-500 mr-2"></i> Liste du personnel
+                </h3>
+                <a href="{{ route('create-user') }}" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-2 shadow-sm">
+                    <i class="fas fa-user-plus"></i> Ajouter un dossier
+                </a>
+            </div>
 
             <div class="flex flex-col md:flex-row gap-4 items-end bg-white p-4 rounded-lg border border-gray-200 shadow-sm">
                 <div class="w-full md:w-1/3">
@@ -178,17 +183,23 @@ new class extends Component {
                             </td>
                             <td class="px-6 py-4 text-right">
                                 <div class="flex justify-end gap-2">
-                                    <button class="text-gray-500 hover:text-blue-600 bg-gray-100 hover:bg-blue-50 p-2 rounded transition-colors" title="Visualiser le dossier">
-                                        <i class="fas fa-eye"></i>
-                                    </button>
-                                    <a href="#" class="text-gray-500 hover:text-yellow-600 bg-gray-100 hover:bg-yellow-50 p-2 rounded transition-colors" title="Mettre à jour">
-                                        <i class="fas fa-edit"></i>
+                                    <a href="{{ route('show-user', $user->id) }}"
+                                        class="text-gray-500 hover:text-blue-600 bg-gray-100 hover:bg-blue-50 p-2 rounded transition-colors cursor-default hover:cursor-grab"
+                                        title="Visualiser le dossier">
+                                        <i class="fas fa-eye fa-fw"></i>
                                     </a>
+
+                                    <a href="{{ route('edit-user', $user->id) }}"
+                                        class="text-gray-500 hover:text-yellow-600 bg-gray-100 hover:bg-yellow-50 p-2 rounded transition-colors cursor-default hover:cursor-grab"
+                                        title="Mettre à jour">
+                                        <i class="fas fa-pen fa-fw"></i>
+                                    </a>
+
                                     <button
                                         wire:click="confirmDelete({{ $user->id }})"
-                                        class="text-gray-500 hover:text-red-600 bg-gray-100 hover:bg-red-50 p-2 rounded transition-colors"
+                                        class="text-gray-500 hover:text-red-600 bg-gray-100 hover:bg-red-50 p-2 rounded transition-colors cursor-default hover:cursor-grab"
                                         title="Supprimer">
-                                        <i class="fas fa-trash-alt"></i>
+                                        <i class="fas fa-trash-alt fa-fw"></i>
                                     </button>
                                 </div>
                             </td>
@@ -215,29 +226,44 @@ new class extends Component {
     </div>
 
     @if($showDeleteModal)
-        <div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50 backdrop-blur-sm transition-opacity">
-            <div class="bg-white rounded-xl shadow-xl max-w-md w-full overflow-hidden transform transition-all">
-                <div class="p-6">
-                    <div class="flex items-center justify-center w-16 h-16 mx-auto mb-4 bg-red-100 rounded-full">
-                        <i class="fas fa-exclamation-triangle text-2xl text-red-600"></i>
+        <div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-[2px] transition-opacity">
+            <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full overflow-hidden transform transition-all">
+
+                {{-- Header --}}
+                <div class="px-6 pt-6 pb-4 text-center">
+                    <div class="flex items-center justify-center w-14 h-14 mx-auto mb-4 bg-red-100 rounded-full ring-4 ring-red-50">
+                        <i class="fas fa-trash-alt text-xl text-red-600"></i>
                     </div>
-                    <h3 class="text-xl font-bold text-center text-gray-900 mb-2">Confirmer la suppression</h3>
-                    <p class="text-sm text-center text-gray-500 mb-4">
+                    <h3 class="text-lg font-bold text-gray-900 mb-1">Confirmer la suppression</h3>
+                    <p class="text-sm text-gray-500">
                         Êtes-vous sûr de vouloir supprimer définitivement ce dossier du personnel ?
                     </p>
-                    <div class="bg-red-50 border-l-4 border-red-500 p-3 mb-2 rounded text-xs text-red-700 text-left">
-                        <strong>Attention :</strong> Cette action est irréversible. Le compte utilisateur ainsi que tous ses documents physiques stockés sur le serveur seront définitivement détruits.
-                    </div>
                 </div>
-                <div class="px-6 py-4 bg-gray-50 border-t border-gray-200 flex justify-end gap-3">
-                    <button wire:click="cancelDelete" class="px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-100 transition-colors">
+
+                {{-- Warning block --}}
+                <div class="mx-6 mb-5 bg-red-50 border border-red-200 rounded-xl p-3 flex gap-3 items-start">
+                    <i class="fas fa-exclamation-triangle text-red-500 mt-0.5 text-sm flex-shrink-0"></i>
+                    <p class="text-xs text-red-700 leading-relaxed">
+                        <span class="font-semibold">Action irréversible.</span> Le compte utilisateur ainsi que tous ses documents physiques stockés sur le serveur seront définitivement détruits.
+                    </p>
+                </div>
+
+                {{-- Actions --}}
+                <div class="px-6 py-4 bg-gray-50 border-t border-gray-100 flex justify-end gap-2">
+                    <button wire:click="cancelDelete"
+                        class="px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 hover:border-gray-400 transition-all">
                         Annuler
                     </button>
-                    <button wire:click="executeDelete" class="px-4 py-2 bg-red-600 text-white rounded-lg text-sm font-medium hover:bg-red-700 transition-colors flex items-center gap-2 shadow-sm">
-                        <i class="fas fa-trash-alt"></i> Oui, supprimer
-                        <span wire:loading wire:target="executeDelete"><i class="fas fa-spinner fa-spin"></i></span>
+                    <button wire:click="executeDelete"
+                        class="px-4 py-2 bg-red-600 text-white rounded-lg text-sm font-medium hover:bg-red-700 active:bg-red-800 transition-all flex items-center gap-2 shadow-sm">
+                        <i class="fas fa-trash-alt text-xs"></i>
+                        Supprimer
+                        <span wire:loading wire:target="executeDelete">
+                            <i class="fas fa-spinner fa-spin text-xs"></i>
+                        </span>
                     </button>
                 </div>
+
             </div>
         </div>
     @endif

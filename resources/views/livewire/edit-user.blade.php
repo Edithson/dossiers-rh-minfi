@@ -143,8 +143,8 @@ new class extends Component {
             <h2 class="text-2xl font-bold text-gray-800">Édition du dossier</h2>
             <p class="text-gray-500 text-sm">Employé : {{ $user->name }} ({{ $user->matricule }})</p>
         </div>
-        <a href="/" class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors text-sm font-medium">
-            <i class="fas fa-arrow-left mr-2"></i> Retour au tableau de bord
+        <a href="{{ route('users') }}" class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors text-sm font-medium">
+            <i class="fas fa-arrow-left mr-2"></i> Retour à la liste
         </a>
     </div>
 
@@ -239,7 +239,7 @@ new class extends Component {
                                                         </a>
 
                                                         <button type="button" wire:click="stageForDeletion({{ $piece->id }}, {{ $index }})" class="text-gray-400 hover:text-red-500 transition-colors" title="Supprimer ce fichier">
-                                                            <i class="fas fa-trash-alt">X</i>
+                                                            <i class="fas fa-trash-alt"></i>
                                                         </button>
                                                     </li>
                                                 @endforeach

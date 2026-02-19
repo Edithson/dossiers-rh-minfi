@@ -12,9 +12,7 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $users = User::all();
-        $pieces = Piece::all();
-        return view('admin.pages.dashboard', compact('users', 'pieces'));
+        return view('admin.pages.dashboard');
     }
 
 }

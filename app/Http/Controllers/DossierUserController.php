@@ -21,6 +21,11 @@ class DossierUserController extends Controller
         return view('admin.pages.user.create');
     }
 
+    public function show(User $user)
+    {
+        return view('admin.pages.user.show', compact('user'));
+    }
+
     public function edit(User $user)
     {
         return view('admin.pages.user.edit', compact('user'));
