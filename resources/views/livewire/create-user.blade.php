@@ -21,18 +21,19 @@ new class extends Component {
     {
         $this->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email',
+            'email' => 'nullable|email|unique:users,email',
             'matricule' => 'required|string|unique:users,matricule',
-            'password' => 'required|string|min:6',
+            'password' => 'nullable|string|min:6',
             'pieceFiles.*.*' => 'file|max:2048', // 2Mo max par fichier
         ]);
 
         // 1. Création de l'utilisateur
         $user = User::create([
             'name' => $this->name,
-            'email' => $this->email,
+            'email' => null,
             'matricule' => $this->matricule,
-            'password' => Hash::make($this->password),
+            'password' => null,
+            // 'password' => Hash::make($this->password),
         ]);
 
         // 2. Traitement des pièces et fichiers
@@ -95,17 +96,17 @@ new class extends Component {
                     @error('matricule') <span class="text-xs text-red-500 mt-1">{{ $message }}</span> @enderror
                 </div>
 
-                <div>
+                {{-- <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">Adresse Email</label>
                     <input type="email" wire:model="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                     @error('email') <span class="text-xs text-red-500 mt-1">{{ $message }}</span> @enderror
-                </div>
+                </div> --}}
 
-                <div>
+                {{-- <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">Mot de passe provisoire</label>
                     <input type="password" wire:model="password" class="w-full px-4 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                     @error('password') <span class="text-xs text-red-500 mt-1">{{ $message }}</span> @enderror
-                </div>
+                </div> --}}
             </div>
         </div>
 

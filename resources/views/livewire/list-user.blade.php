@@ -88,7 +88,7 @@ new class extends Component {
         }
 
         return [
-            'users' => $query->paginate(1),
+            'users' => $query->paginate(10),
             'availablePieces' => Piece::all(),
             'totalPiecesCount' => Piece::count()
         ];

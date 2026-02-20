@@ -70,7 +70,7 @@ new class extends Component {
             <a href="{{ route('users') }}" class="px-5 py-2.5 bg-white/10 hover:bg-white/20 border border-white/20 rounded-xl font-medium backdrop-blur-sm transition-all text-sm flex items-center gap-2">
                 <i class="fas fa-list"></i> Tous les employés
             </a>
-            <a href="/create-user" class="px-5 py-2.5 bg-blue-500 hover:bg-blue-400 rounded-xl font-bold transition-all text-sm flex items-center gap-2 shadow-lg shadow-blue-500/30">
+            <a href="{{route("create-user")}}" class="px-5 py-2.5 bg-blue-500 hover:bg-blue-400 rounded-xl font-bold transition-all text-sm flex items-center gap-2 shadow-lg shadow-blue-500/30">
                 <i class="fas fa-plus"></i> Nouveau Dossier
             </a>
         </div>
